@@ -29,6 +29,13 @@ protocol Mathematics {
     func subtract() -> Money
 }
 
+extension Double {
+    var USD: Money { return Money(amount: Int(self), currency: "USD") }
+    var EUR: Money { return Money(amount: Int(self), currency: "EUR") }
+    var GBP: Money { return Money(amount: Int(self), currency: "GBP") }
+    var YEN: Money { return Money(amount: Int(self), currency: "YEN") }
+}
+
 
 
 
@@ -42,7 +49,7 @@ public struct Money : CustomStringConvertible {
   
     init(amount: Int, currency : String) {
         self.amount = amount
-        if (currency == "USD" || currency == "GBP" || currency == "EUR" || currency == "CAN"){
+        if (currency == "USD" || currency == "GBP" || currency == "EUR" || currency == "CAN" || currency == "YEN"){
             self.currency = currency
         } else {
             self.currency = "";

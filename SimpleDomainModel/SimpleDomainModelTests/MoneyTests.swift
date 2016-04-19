@@ -115,7 +115,20 @@ class MoneyTests: XCTestCase {
         XCTAssert(total.currency == "USD")
         XCTAssert(total.description == "USD0")
     }
- 
     
+    func extensionTestsForMoney() {
+        let tenusd = 10.0.USD
+        XCTAssert(tenusd.currency == "USD")
+        XCTAssert(tenusd.amount == 10)
+        let twentyGBP = 20.0.GBP
+        XCTAssert(twentyGBP.currency == "GBP")
+        XCTAssert(twentyGBP.amount == 20)
+        let tenyen = 10.0.YEN
+        XCTAssert(tenyen.currency == "USD")
+        XCTAssert(tenyen.amount == 10)
+        let thirtyeur = 30.0.EUR
+        XCTAssert(thirtyeur.currency == "EUR")
+        XCTAssert(thirtyeur.amount == 30)
+    }
 }
 
