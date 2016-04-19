@@ -19,12 +19,26 @@ public class TestMe {
   }
 }
 
+protocol CustomStringConvertible {
+    var description : String { get }
+    
+}
+
+protocol Mathematics {
+    func add() -> Money
+    func subtract() -> Money
+}
+
+
+
+
 ////////////////////////////////////
 // Money
 //
-public struct Money {
+public struct Money : CustomStringConvertible {
   public var amount : Int
   public var currency : String
+  public var description: String
   
     init(amount: Int, currency : String) {
         self.amount = amount
@@ -33,7 +47,10 @@ public struct Money {
         } else {
             self.currency = "";
         }
+        self.description = currency + "\(amount)"
     }
+    
+    
   public func convert(to: String) -> Money {
     var result = 0
     if (currency == "USD"){
@@ -117,10 +134,11 @@ public struct Money {
 ////////////////////////////////////
 // Job
 //
-public class Job {
+public class Job : CustomStringConvertible {
 
   public var title : String
   public var type : JobType
+  public var description: String
     
   public enum JobType {
     case Hourly(Double)
@@ -130,6 +148,7 @@ public class Job {
   public init(title : String, type : JobType) {
     self.title = title
     self.type = type
+    self.description = "\(title) : \(type)"
 
   }
   
@@ -155,12 +174,14 @@ public class Job {
 ////////////////////////////////////
 // Person
 //
-public class Person {
+public class Person : CustomStringConvertible{
   public var firstName : String = ""
   public var lastName : String = ""
   public var age : Int = 0
+  public var description: String
   private var _job : Job?
   private var _spouse : Person?
+    
 
   public var job : Job? {
     get {
@@ -194,6 +215,7 @@ public class Person {
     self.age = age
     _job = nil
     _spouse = nil
+    self.description = "[Person: firstName:\(self.firstName) lastName:\(self.lastName) age:\(self.age) job:\(_job) spouse:\(_spouse)]"
   }
   
   public func toString() -> String {
@@ -204,8 +226,9 @@ public class Person {
 ////////////////////////////////////
 // Family
 //
-public class Family {
+public class Family : CustomStringConvertible {
   private var members : [Person] = []
+  public var description: String
   
   public init(spouse1: Person, spouse2: Person) {
     if (spouse1.spouse == nil && spouse2.spouse == nil){
@@ -214,6 +237,11 @@ public class Family {
         members.append(spouse1)
         members.append(spouse2)
     }
+    self.description = "Family of "
+    for member in members {
+        self.description += "\(member.firstName) "
+    }
+    
   }
   
   public func haveChild(child: Person) -> Bool {

@@ -25,36 +25,43 @@ class MoneyTests: XCTestCase {
     let oneUSD = Money(amount: 1, currency: "USD")
     XCTAssert(oneUSD.amount == 1)
     XCTAssert(oneUSD.currency == "USD")
+    XCTAssert(oneUSD.description == "USD1")
     
     let tenGBP = Money(amount: 10, currency: "GBP")
     XCTAssert(tenGBP.amount == 10)
     XCTAssert(tenGBP.currency == "GBP")
+    XCTAssert(tenGBP.description == "GBP10")
   }
   
   func testUSDtoGBP() {
     let gbp = tenUSD.convert("GBP")
     XCTAssert(gbp.currency == "GBP")
     XCTAssert(gbp.amount == 5)
+    XCTAssert(gbp.description == "GBP5")
   }
   func testUSDtoEUR() {
     let eur = tenUSD.convert("EUR")
     XCTAssert(eur.currency == "EUR")
     XCTAssert(eur.amount == 15)
+    XCTAssert(eur.description == "EUR15")
   }
   func testUSDtoCAN() {
     let can = twelveUSD.convert("CAN")
     XCTAssert(can.currency == "CAN")
     XCTAssert(can.amount == 15)
+    XCTAssert(can.description == "CAN15")
   }
   func testGBPtoUSD() {
     let usd = fiveGBP.convert("USD")
     XCTAssert(usd.currency == "USD")
     XCTAssert(usd.amount == 10)
+    XCTAssert(usd.description == "USD10")
   }
   func testEURtoUSD() {
     let usd = fifteenEUR.convert("USD")
     XCTAssert(usd.currency == "USD")
     XCTAssert(usd.amount == 10)
+    XCTAssert(usd.description == "USD10")
   }
   func testCANtoUSD() {
     let usd = fifteenCAN.convert("USD")
@@ -85,13 +92,30 @@ class MoneyTests: XCTestCase {
     let total = tenUSD.add(tenUSD)
     XCTAssert(total.amount == 20)
     XCTAssert(total.currency == "USD")
+    XCTAssert(total.description == "USD20")
   }
   
   func testAddUSDtoGBP() {
     let total = tenUSD.add(fiveGBP)
     XCTAssert(total.amount == 10)
     XCTAssert(total.currency == "GBP")
+    XCTAssert(total.description == "GBP10")
   }
+  
+    func testAddGBPtoGBP() {
+        let total = fiveGBP.add(fiveGBP)
+        XCTAssert(total.amount == 10)
+        XCTAssert(total.currency == "GBP")
+        XCTAssert(total.description == "GBP10")
+    }
+    
+    func testSubtractUSDtoUSD() {
+        let total = tenUSD.subtract(tenUSD)
+        XCTAssert(total.amount == 0)
+        XCTAssert(total.currency == "USD")
+        XCTAssert(total.description == "USD0")
+    }
+ 
     
 }
 
